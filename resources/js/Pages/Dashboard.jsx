@@ -110,13 +110,13 @@ export default function Dashboard({ memos, canLogin, canRegister }) {
                 {memos && memos.length > 0 ? (
                     <div className="flex-1 container mx-auto max-w-6xl px-2 sm:px-4 pb-2 sm:pb-8">
                         <Tabs defaultValue="all" className="h-full">
-                            {/* Sticky tabs navigation with gold background */}
+                            {/* Sticky tabs navigation with flat tabs */}
                             <div className="sticky top-0 bg-white pt-2 pb-2 sm:pb-4 z-10">
                                 <div className="flex justify-center overflow-x-auto pb-2">
-                                    <TabsList className="flex-nowrap overflow-x-auto bg-yellow-100">
-                                        <TabsTrigger value="all" className="data-[state=active]:bg-yellow-500 data-[state=active]:text-white">All Memos</TabsTrigger>
+                                    <TabsList className="flex-nowrap overflow-x-auto bg-yellow-100 rounded-none">
+                                        <TabsTrigger value="all" className="data-[state=active]:bg-yellow-500 data-[state=active]:text-white rounded-none">All Memos</TabsTrigger>
                                         {categories.map((category) => (
-                                            <TabsTrigger key={category} value={category} className="data-[state=active]:bg-yellow-500 data-[state=active]:text-white">
+                                            <TabsTrigger key={category} value={category} className="data-[state=active]:bg-yellow-500 data-[state=active]:text-white rounded-none">
                                                 {category}
                                             </TabsTrigger>
                                         ))}
@@ -161,7 +161,7 @@ export default function Dashboard({ memos, canLogin, canRegister }) {
                 ) : (
                     <div className="flex-1 container mx-auto max-w-6xl px-4 pb-8">
                         <div className="flex flex-col items-center justify-center h-[50vh]">
-                            <div className="bg-white p-8 border border-gray-200 text-center">
+                            <div className="bg-white p-8 border border-gray-200 text-center rounded-none">
                                 <h2 className="text-xl font-semibold mb-2">No Memos Available</h2>
                                 <p className="text-gray-600 mb-4">
                                     There are no published memos at the moment. Please check back later.
@@ -185,7 +185,7 @@ export default function Dashboard({ memos, canLogin, canRegister }) {
 
             {/* Memo Detail Dialog */}
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-auto p-0 border border-green-300">
+                <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-auto p-0 border border-green-300 rounded-none">
                     {selectedMemo && (
                         <div className="flex flex-col lg:flex-row h-full">
                             {/* Image Container - Takes full height on desktop */}
@@ -206,7 +206,7 @@ export default function Dashboard({ memos, canLogin, canRegister }) {
                                         />
 
                                         <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/10 z-20">
-                                            <span className="bg-black/50 text-white px-3 py-1 rounded-md text-sm">Click to enlarge</span>
+                                            <span className="bg-black/50 text-white px-3 py-1 rounded-none text-sm">Click to enlarge</span>
                                         </div>
                                     </div>
                                 </div>
@@ -270,7 +270,7 @@ export default function Dashboard({ memos, canLogin, canRegister }) {
             {/* Image Modal */}
             {selectedMemo && selectedMemo.image && (
                 <Dialog open={imageModalOpen} onOpenChange={setImageModalOpen}>
-                    <DialogContent className="sm:max-w-5xl max-h-[95vh] p-2 sm:p-4 flex items-center justify-center border border-green-300">
+                    <DialogContent className="sm:max-w-5xl max-h-[95vh] p-2 sm:p-4 flex items-center justify-center border border-green-300 rounded-none">
                         <div className="relative w-full h-full flex items-center justify-center">
                             <img
                                 src={`/storage/${selectedMemo.image}`}
@@ -341,14 +341,14 @@ function MemoCard({ memo, onClick }) {
     return (
         <Card
             ref={cardRef}
-            className="h-full group relative cursor-pointer overflow-hidden border border-gray-200"
+            className="h-full group relative cursor-pointer overflow-hidden border border-gray-200 rounded-none"
             onClick={onClick}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
             onMouseMove={handleMouseMove}
         >
-            {/* Flat background overlay instead of gradient */}
-            <div className="absolute inset-0 bg-green-900/80 z-10"></div>
+            {/* Flat background overlay - using neutral black overlay with more transparency */}
+            <div className="absolute inset-0 bg-black/70 z-10"></div>
 
             {/* Image as background - full width/height */}
             {memo.image && !imageError ? (
@@ -362,8 +362,8 @@ function MemoCard({ memo, onClick }) {
                     />
                 </div>
             ) : (
-                <div className="absolute inset-0 w-full h-full bg-green-50 flex items-center justify-center">
-                    <div className="text-green-400 text-3xl">{memo.category.name.charAt(0)}</div>
+                <div className="absolute inset-0 w-full h-full bg-white flex items-center justify-center">
+                    <div className="text-gray-400 text-3xl">{memo.category.name.charAt(0)}</div>
                 </div>
             )}
 
@@ -371,7 +371,7 @@ function MemoCard({ memo, onClick }) {
             <div className="absolute inset-0 z-20 p-4 flex flex-col justify-end">
                 <div className="text-white space-y-2">
                     <div className="flex justify-between items-start">
-                        <Badge className="bg-yellow-500 text-white border-none">
+                        <Badge className="bg-yellow-500 text-white border-none rounded-none">
                             {memo.category.name}
                         </Badge>
                         {memo.is_published && (
@@ -411,7 +411,7 @@ function MemoCard({ memo, onClick }) {
 
                     <div className="flex justify-between items-center pt-2 text-xs text-white/90">
                         <div>ID: {memo.id}</div>
-                        <Badge variant={memo.is_published ? "success" : "secondary"} className="bg-yellow-500 text-white border-none">
+                        <Badge variant={memo.is_published ? "success" : "secondary"} className="bg-yellow-500 text-white border-none rounded-none">
                             {memo.is_published ? 'Published' : 'Draft'}
                         </Badge>
                     </div>
