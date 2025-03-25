@@ -76,9 +76,9 @@ export default function Dashboard({ memos, canLogin, canRegister }) {
     return (
         <>
             <Head title="SPUP eMemo" />
-            <div className="flex flex-col min-h-screen bg-gray-50">
-                {/* Header section without auth */}
-                <header className="bg-white shadow border-b py-2 sm:py-4">
+            <div className="flex flex-col min-h-screen bg-white">
+                {/* Header section with green background */}
+                <header className="bg-green-700 py-2 sm:py-4 border-b border-green-800">
                     <div className="container mx-auto max-w-6xl px-2 sm:px-4">
                         <div className="flex justify-between items-center">
                             <div className="flex items-center space-x-2">
@@ -87,18 +87,18 @@ export default function Dashboard({ memos, canLogin, canRegister }) {
                                     alt="SPUP Logo"
                                     className="h-8 sm:h-12 w-auto"
                                 />
-                                <h1 className="text-lg sm:text-xl font-bold">SPUP eMemo</h1>
+                                <h1 className="text-lg sm:text-xl font-bold text-white">SPUP eMemo</h1>
                             </div>
                         </div>
                     </div>
                 </header>
 
                 {/* Title section */}
-                <div className="bg-gray-50 pt-4 sm:pt-8 px-2 sm:px-4">
+                <div className="bg-white pt-4 sm:pt-8 px-2 sm:px-4">
                     <div className="container mx-auto max-w-6xl">
                         <div className="text-center mb-4 sm:mb-6">
                             <div className="flex flex-col items-center space-y-1 sm:space-y-2">
-                                <p className="text-sm sm:text-base text-muted-foreground max-w-2xl px-2">
+                                <p className="text-sm sm:text-base text-gray-600 max-w-2xl px-2">
                                     View the latest announcements and updates.
                                 </p>
                             </div>
@@ -106,17 +106,17 @@ export default function Dashboard({ memos, canLogin, canRegister }) {
                     </div>
                 </div>
 
-                {/* Check if there are memos to display - removed auth dependency */}
+                {/* Check if there are memos to display */}
                 {memos && memos.length > 0 ? (
                     <div className="flex-1 container mx-auto max-w-6xl px-2 sm:px-4 pb-2 sm:pb-8">
                         <Tabs defaultValue="all" className="h-full">
-                            {/* Sticky tabs navigation */}
-                            <div className="sticky top-0 bg-gray-50 pt-2 pb-2 sm:pb-4 z-10">
+                            {/* Sticky tabs navigation with gold background */}
+                            <div className="sticky top-0 bg-white pt-2 pb-2 sm:pb-4 z-10">
                                 <div className="flex justify-center overflow-x-auto pb-2">
-                                    <TabsList className="flex-nowrap overflow-x-auto">
-                                        <TabsTrigger value="all">All Memos</TabsTrigger>
+                                    <TabsList className="flex-nowrap overflow-x-auto bg-yellow-100">
+                                        <TabsTrigger value="all" className="data-[state=active]:bg-yellow-500 data-[state=active]:text-white">All Memos</TabsTrigger>
                                         {categories.map((category) => (
-                                            <TabsTrigger key={category} value={category}>
+                                            <TabsTrigger key={category} value={category} className="data-[state=active]:bg-yellow-500 data-[state=active]:text-white">
                                                 {category}
                                             </TabsTrigger>
                                         ))}
@@ -161,9 +161,9 @@ export default function Dashboard({ memos, canLogin, canRegister }) {
                 ) : (
                     <div className="flex-1 container mx-auto max-w-6xl px-4 pb-8">
                         <div className="flex flex-col items-center justify-center h-[50vh]">
-                            <div className="bg-white p-8 rounded-lg shadow-md text-center">
+                            <div className="bg-white p-8 border border-gray-200 text-center">
                                 <h2 className="text-xl font-semibold mb-2">No Memos Available</h2>
-                                <p className="text-muted-foreground mb-4">
+                                <p className="text-gray-600 mb-4">
                                     There are no published memos at the moment. Please check back later.
                                 </p>
                             </div>
@@ -172,10 +172,10 @@ export default function Dashboard({ memos, canLogin, canRegister }) {
                 )}
 
                 {/* Footer */}
-                <footer className="bg-white border-t py-6">
+                <footer className="bg-green-700 py-6 text-white">
                     <div className="container mx-auto max-w-6xl px-4">
                         <div className="flex flex-col justify-between items-center">
-                            <div className="text-sm text-muted-foreground">
+                            <div className="text-sm">
                                 © {new Date().getFullYear()} SPUP Memo. All rights reserved.
                             </div>
                         </div>
@@ -185,7 +185,7 @@ export default function Dashboard({ memos, canLogin, canRegister }) {
 
             {/* Memo Detail Dialog */}
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-auto p-0">
+                <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-auto p-0 border border-green-300">
                     {selectedMemo && (
                         <div className="flex flex-col lg:flex-row h-full">
                             {/* Image Container - Takes full height on desktop */}
@@ -270,7 +270,7 @@ export default function Dashboard({ memos, canLogin, canRegister }) {
             {/* Image Modal */}
             {selectedMemo && selectedMemo.image && (
                 <Dialog open={imageModalOpen} onOpenChange={setImageModalOpen}>
-                    <DialogContent className="sm:max-w-5xl max-h-[95vh] p-2 sm:p-4 flex items-center justify-center">
+                    <DialogContent className="sm:max-w-5xl max-h-[95vh] p-2 sm:p-4 flex items-center justify-center border border-green-300">
                         <div className="relative w-full h-full flex items-center justify-center">
                             <img
                                 src={`/storage/${selectedMemo.image}`}
@@ -341,14 +341,14 @@ function MemoCard({ memo, onClick }) {
     return (
         <Card
             ref={cardRef}
-            className="h-full group relative cursor-pointer overflow-hidden"
+            className="h-full group relative cursor-pointer overflow-hidden border border-gray-200"
             onClick={onClick}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
             onMouseMove={handleMouseMove}
         >
-            {/* Background - remove opacity-0 and transition */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30 z-10"></div>
+            {/* Flat background overlay instead of gradient */}
+            <div className="absolute inset-0 bg-green-900/80 z-10"></div>
 
             {/* Image as background - full width/height */}
             {memo.image && !imageError ? (
@@ -362,20 +362,20 @@ function MemoCard({ memo, onClick }) {
                     />
                 </div>
             ) : (
-                <div className="absolute inset-0 w-full h-full bg-gray-100 flex items-center justify-center">
-                    <div className="text-gray-400 text-3xl">{memo.category.name.charAt(0)}</div>
+                <div className="absolute inset-0 w-full h-full bg-green-50 flex items-center justify-center">
+                    <div className="text-green-400 text-3xl">{memo.category.name.charAt(0)}</div>
                 </div>
             )}
 
-            {/* Content overlay - always visible instead of on hover */}
+            {/* Content overlay - always visible */}
             <div className="absolute inset-0 z-20 p-4 flex flex-col justify-end">
                 <div className="text-white space-y-2">
                     <div className="flex justify-between items-start">
-                        <Badge className="bg-white/20 text-white">
+                        <Badge className="bg-yellow-500 text-white border-none">
                             {memo.category.name}
                         </Badge>
                         {memo.is_published && (
-                            <div className="text-sm text-white/80 flex items-center">
+                            <div className="text-sm text-white/90 flex items-center">
                                 <CalendarIcon className="h-3 w-3 mr-1" />
                                 {publishedDate ? formatDistanceToNow(publishedDate, { addSuffix: true }) : 'Not published'}
                             </div>
@@ -384,6 +384,7 @@ function MemoCard({ memo, onClick }) {
 
                     <h3 className="font-bold text-lg line-clamp-2">{memo.title}</h3>
 
+                    {/* Author info */}
                     <div className="flex items-center mt-2">
                         {authorAvatarSrc ? (
                             <img
@@ -393,24 +394,24 @@ function MemoCard({ memo, onClick }) {
                                 onError={handleAuthorAvatarError}
                             />
                         ) : (
-                            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-2 border border-white/30">
+                            <div className="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center mr-2">
                                 <span className="text-xs font-bold text-white">
                                     {author.name.charAt(0).toUpperCase()}
                                 </span>
                             </div>
                         )}
-                        <div className="text-white/90 text-sm font-medium">
+                        <div className="text-white text-sm font-medium">
                             {author.name}
                         </div>
                     </div>
 
-                    <div className="text-sm text-white/80 line-clamp-3 overflow-hidden">
+                    <div className="text-sm text-white/90 line-clamp-3 overflow-hidden">
                         {memo.content ? memo.content.replace(/<[^>]*>?/gm, '') : ''}
                     </div>
 
-                    <div className="flex justify-between items-center pt-2 text-xs text-white/70">
+                    <div className="flex justify-between items-center pt-2 text-xs text-white/90">
                         <div>ID: {memo.id}</div>
-                        <Badge variant={memo.is_published ? "success" : "secondary"} className="bg-white/20 text-white">
+                        <Badge variant={memo.is_published ? "success" : "secondary"} className="bg-yellow-500 text-white border-none">
                             {memo.is_published ? 'Published' : 'Draft'}
                         </Badge>
                     </div>
